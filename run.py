@@ -172,6 +172,63 @@ def q8(municipality):
     # ne momentin kur hapim  
     return resp
 
+@app.route("/q13/<string:municipality>")
+def q13(municipality):
+    '''
+        sh.: /q13/Ferizaj
+    '''
+    # ruajme rezultatin qe na kthehet nga databaza permes ekzekutimit te kerkeses(Query) ne json.
+    json = db.gsc.aggregate([{  
+        "$match" : { 
+            "surveyee.municipality" : municipality
+        } 
+    },
+    {
+        "$group" : { 
+            "_id" : { 
+            }, 
+            "q13a1" : { 
+                "$sum": "$q13.answers.a1.value" 
+            }, 
+            "q13a2" : { 
+                "$sum": "$q13.answers.a2.value" 
+            }, 
+            "q13a3" : { 
+                "$sum": "$q13.answers.a3.value" 
+            }, 
+            "q13a4" : { 
+                "$sum": "$q13.answers.a4.value" 
+            }, 
+            "q13a5" : { 
+                "$sum": "$q13.answers.a5.value" 
+            }, 
+            "q13a6" : { 
+                "$sum": "$q13.answers.a6.value" 
+            }, 
+            "q13a7" : { 
+                "$sum": "$q13.answers.a7.value" 
+            }, 
+            "q13a8" : { 
+                "$sum": "$q13.answers.a8.value" 
+            }, 
+            "q13a9" : { 
+                "$sum": "$q13.answers.a9.value" 
+            }, 
+            "q13a10" : { 
+                "$sum": "$q13.answers.a10.value" 
+            }
+        }
+    }])
+
+    # pergjigjen e kthyer dhe te konvertuar ne JSON ne baze te json_util.dumps() e ruajme ne resp
+    resp = Response(
+        response=json_util.dumps(json['result']),
+        mimetype='application/json')
+
+    # ne momentin kur hapim  
+    return resp
+
+
 # Run the app
 if __name__ == '__main__':
 
