@@ -141,7 +141,7 @@ def q8(municipality):
     },
     {
         "$group" : { 
-            "_id" : { 
+            "_id" : {
             }, 
             "q8a1" : { 
                 "$sum": "$q8.answers.a1.value" 
@@ -160,9 +160,23 @@ def q8(municipality):
             }, 
             "q8a6" : { 
                 "$sum": "$q8.answers.a6.value" 
-            }, 
+            } 
         }
-    }])
+    },
+     {
+	"$project": { 
+	    "_id" : 0,
+	    "8" : { 
+		    "d": "$q8a4",
+		    "e": "$q8a5",
+		    "f": "$q8a6",
+		    "a": "$q8a1",
+		    "b": "$q8a2",
+	            "c": "$q8a3"
+		   } 
+     	}
+     }
+])
 
     # pergjigjen e kthyer dhe te konvertuar ne JSON ne baze te json_util.dumps() e ruajme ne resp
     resp = Response(
@@ -183,7 +197,7 @@ def q13(municipality):
             "surveyee.municipality" : municipality
         } 
     },
-    {
+    { 
         "$group" : { 
             "_id" : { 
             }, 
@@ -218,7 +232,8 @@ def q13(municipality):
                 "$sum": "$q13.answers.a10.value" 
             }
         }
-    }])
+    }
+])
 
     # pergjigjen e kthyer dhe te konvertuar ne JSON ne baze te json_util.dumps() e ruajme ne resp
     resp = Response(
