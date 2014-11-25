@@ -36,40 +36,40 @@ def q1(municipality):
             "_id" : { 
             }, 
             "q1a1" : { 
-                "$sum": "$q2.answers.a1.value" 
+                "$sum": "$q1.answers.a1.value" 
             }, 
             "q1a2" : { 
-                "$sum": "$q2.answers.a2.value" 
+                "$sum": "$q1.answers.a2.value" 
             }, 
             "q1a3" : { 
-                "$sum": "$q2.answers.a3.value" 
+                "$sum": "$q1.answers.a3.value" 
             }, 
             "q1a4" : { 
-                "$sum": "$q2.answers.a4.value" 
+                "$sum": "$q1.answers.a4.value" 
             }, 
             "q1a5" : { 
-                "$sum": "$q2.answers.a5.value" 
+                "$sum": "$q1.answers.a5.value" 
             }, 
             "q1a6" : { 
-                "$sum": "$q2.answers.a6.value" 
+                "$sum": "$q1.answers.a6.value" 
             }, 
             "q1a7" : { 
-                "$sum": "$q2.answers.a7.value" 
+                "$sum": "$q1.answers.a7.value" 
             }, 
             "q1a8" : { 
-                "$sum": "$q2.answers.a8.value" 
+                "$sum": "$q1.answers.a8.value" 
             }, 
             "q1a9" : { 
-                "$sum": "$q2.answers.a9.value" 
+                "$sum": "$q1.answers.a9.value" 
             }, 
             "q1a10" : { 
-                "$sum": "$q2.answers.a10.value" 
+                "$sum": "$q1.answers.a10.value" 
             }, 
             "q1a11" : { 
-                "$sum": "$q2.answers.a11.value" 
+                "$sum": "$q1.answers.a11.value" 
             }, 
             "q1a12" : { 
-                "$sum": "$q2.answers.a12.value" 
+                "$sum": "$q1.answers.a12.value" 
             }
         }
     }])
@@ -84,7 +84,93 @@ def q1(municipality):
 
 @app.route("/q2/<string:municipality>")
 def q2(municipality):
-    return '<h1>Nastradini says "Implement me!"</h1>'
+    '''
+        sh.: /q2/Ferizaj
+    '''
+    # ruajme rezultatin qe na kthehet nga databaza permes ekzekutimit te kerkeses(Query) ne json.
+    json = db.gsc.aggregate([{  
+        "$match" : { 
+            "surveyee.municipality" : municipality
+        } 
+    },
+    {
+        "$group" : { 
+            "_id" : { 
+            }, 
+            "q2a1" : { 
+                "$sum": "$q2.answers.a1.value" 
+            }, 
+            "q2a2" : { 
+                "$sum": "$q2.answers.a2.value" 
+            }, 
+            "q2a3" : { 
+                "$sum": "$q2.answers.a3.value" 
+            }, 
+            "q2a4" : { 
+                "$sum": "$q2.answers.a4.value" 
+            }, 
+            "q2a5" : { 
+                "$sum": "$q2.answers.a5.value" 
+            }, 
+            "q2a6" : { 
+                "$sum": "$q2.answers.a6.value" 
+            }
+        }
+    }])
+
+    # pergjigjen e kthyer dhe te konvertuar ne JSON ne baze te json_util.dumps() e ruajme ne resp
+    resp = Response(
+        response=json_util.dumps(json['result']),
+        mimetype='application/json')
+
+    # ne momentin kur hapim  
+    return resp
+    
+    
+    
+@app.route("/q5/<string:municipality>")
+def q5(municipality):
+    '''
+        sh.: /q5/Ferizaj
+    '''
+    # ruajme rezultatin qe na kthehet nga databaza permes ekzekutimit te kerkeses(Query) ne json.
+    json = db.gsc.aggregate([{  
+        "$match" : { 
+            "surveyee.municipality" : municipality
+        } 
+    },
+    {
+        "$group" : { 
+            "_id" : { 
+            }, 
+            "q5a1" : { 
+                "$sum": "$q5.answers.a1.value" 
+            }, 
+            "q5a2" : { 
+                "$sum": "$q5.answers.a2.value" 
+            }, 
+            "q5a3" : { 
+                "$sum": "$q5.answers.a3.value" 
+            }, 
+            "q5a4" : { 
+                "$sum": "$q5.answers.a4.value" 
+            }, 
+            "q5a5" : { 
+                "$sum": "$q5.answers.a5.value" 
+            }, 
+            "q5a6" : { 
+                "$sum": "$q5.answers.a6.value" 
+            }, 
+        }
+    }])
+
+    # pergjigjen e kthyer dhe te konvertuar ne JSON ne baze te json_util.dumps() e ruajme ne resp
+    resp = Response(
+        response=json_util.dumps(json['result']),
+        mimetype='application/json')
+
+    # ne momentin kur hapim  
+    return resp
 
 # Run the app
 if __name__ == '__main__':
