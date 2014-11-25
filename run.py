@@ -128,8 +128,8 @@ def q2(municipality):
     
     
     
-@app.route("/q5/<string:municipality>")
-def q5(municipality):
+@app.route("/q8/<string:municipality>")
+def q8(municipality):
     '''
         sh.: /q5/Ferizaj
     '''
@@ -143,23 +143,23 @@ def q5(municipality):
         "$group" : { 
             "_id" : { 
             }, 
-            "q5a1" : { 
-                "$sum": "$q5.answers.a1.value" 
+            "q8a1" : { 
+                "$sum": "$q8.answers.a1.value" 
             }, 
-            "q5a2" : { 
-                "$sum": "$q5.answers.a2.value" 
+            "q8a2" : { 
+                "$sum": "$q8.answers.a2.value" 
             }, 
-            "q5a3" : { 
-                "$sum": "$q5.answers.a3.value" 
+            "q8a3" : { 
+                "$sum": "$q8.answers.a3.value" 
             }, 
-            "q5a4" : { 
-                "$sum": "$q5.answers.a4.value" 
+            "q8a4" : { 
+                "$sum": "$q8.answers.a4.value" 
             }, 
-            "q5a5" : { 
-                "$sum": "$q5.answers.a5.value" 
+            "q8a5" : { 
+                "$sum": "$q8.answers.a5.value" 
             }, 
-            "q5a6" : { 
-                "$sum": "$q5.answers.a6.value" 
+            "q8a6" : { 
+                "$sum": "$q8.answers.a6.value" 
             }, 
         }
     }])
