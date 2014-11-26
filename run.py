@@ -72,7 +72,25 @@ def q1(municipality):
                 "$sum": "$q1.answers.a12.value" 
             }
         }
-    }])
+    },
+	{"$project": {
+		"_id":0,
+		"1": {
+			"a":"$q1a1",
+			"b": "$q1a2",
+            "c": "$q1a3",
+            "d": "$q1a4",
+            "e": "$q1a5",
+            "f": "$q1a6",
+            "g": "$q1a7",
+            "h": "$q1a8",
+            "i": "$q1a9",
+            "j": "$q1a10",
+            "k": "$q1a11",
+            "l": "$q1a12"            		}
+	}
+	}
+])
 
     # pergjigjen e kthyer dhe te konvertuar ne JSON ne baze te json_util.dumps() e ruajme ne resp
     resp = Response(
@@ -116,7 +134,19 @@ def q2(municipality):
                 "$sum": "$q2.answers.a6.value" 
             }
         }
-    }])
+    },
+    {"$project":{
+        "_id": 0,
+        "2": {
+            "a":"$q2a1",
+            "b":"$q2a2",
+            "c":"$q2a3",
+            "d": "$q2a4",
+            "e":"$q2a5",
+            "f": "$q2a6"
+        }
+    }}
+    ])
 
     # pergjigjen e kthyer dhe te konvertuar ne JSON ne baze te json_util.dumps() e ruajme ne resp
     resp = Response(
@@ -232,6 +262,22 @@ def q13(municipality):
                 "$sum": "$q13.answers.a10.value" 
             }
         }
+    },
+    {"$project":{ 
+        "_id": 0,
+        "13":{ 
+            "a": "$q13a1",
+            "b": "$q13a2",
+            "c": "$q13a3",
+            "d": "$q13a4",
+            "e": "$q13a5",
+            "f": "$q13a6",
+            "g": "$q13a7",
+            "h": "$q13a8",
+            "i": "$q13a9",
+            "j": "$q13a10"
+        }
+    }
     }
 ])
 
