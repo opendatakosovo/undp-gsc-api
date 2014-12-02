@@ -73,79 +73,23 @@ def q1(municipality):
             }
         }
     },
-	{"$project": {
-		"_id":0,
-		"1": {
-			"a":"$q1a1",
-			"b": "$q1a2",
-            "c": "$q1a3",
-            "d": "$q1a4",
-            "e": "$q1a5",
-            "f": "$q1a6",
-            "g": "$q1a7",
-            "h": "$q1a8",
-            "i": "$q1a9",
-            "j": "$q1a10",
-            "k": "$q1a11",
-            "l": "$q1a12"            		}
-	}
-	}
-])
-
-    # pergjigjen e kthyer dhe te konvertuar ne JSON ne baze te json_util.dumps() e ruajme ne resp
-    resp = Response(
-        response=json_util.dumps(json['result']),
-        mimetype='application/json')
-
-    # ne momentin kur hapim  
-    return resp
-
-@app.route("/q2/<string:municipality>")
-def q2(municipality):
-    '''
-        sh.: /q2/Ferizaj
-    '''
-    # ruajme rezultatin qe na kthehet nga databaza permes ekzekutimit te kerkeses(Query) ne json.
-    json = db.gsc.aggregate([{  
-        "$match" : { 
-            "surveyee.municipality" : municipality
-        } 
-    },
     {
-        "$group" : { 
-            "_id" : { 
-            }, 
-            "q2a1" : { 
-                "$sum": "$q2.answers.a1.value" 
-            }, 
-            "q2a2" : { 
-                "$sum": "$q2.answers.a2.value" 
-            }, 
-            "q2a3" : { 
-                "$sum": "$q2.answers.a3.value" 
-            }, 
-            "q2a4" : { 
-                "$sum": "$q2.answers.a4.value" 
-            }, 
-            "q2a5" : { 
-                "$sum": "$q2.answers.a5.value" 
-            }, 
-            "q2a6" : { 
-                "$sum": "$q2.answers.a6.value" 
+            "$project" : {
+                "_id" : 0,
+                "a1" : "$q1a1",
+                "a2" : "$q1a2",
+                "a3" : "$q1a3",
+                "a4" : "$q1a4",
+                "a5" : "$q1a5",
+                "a6" : "$q1a6",
+                "a7" : "$q1a7",
+                "a8" : "$q1a8",
+                "a9" : "$q1a9",
+                "a10" : "$q1a10",
+                "a11" : "$q1a11",
+                "a12" : "$q1a12"
             }
         }
-    },
-    {"$project":{
-        "_id": 0,
-        "2": {
-            "a":"$q2a1",
-            "b":"$q2a2",
-            "c":"$q2a3",
-            "d": "$q2a4",
-            "e":"$q2a5",
-            "f": "$q2a6"
-        }
-    }}
     ])
 
     # pergjigjen e kthyer dhe te konvertuar ne JSON ne baze te json_util.dumps() e ruajme ne resp
@@ -156,12 +100,126 @@ def q2(municipality):
     # ne momentin kur hapim  
     return resp
     
-    
-    
+@app.route("/q2Gender/<string:municipality>/<string:gender>")
+def q2Gender(municipality, gender):
+    '''
+        sh.: /q2/Ferizaj
+    '''
+    # ruajme rezultatin qe na kthehet nga databaza permes ekzekutimit te kerkeses(Query) ne json.
+    json = db.gsc.aggregate([{
+        "$match" : {
+            "surveyee.municipality" : municipality,
+            "surveyee.gender": gender
+        }
+    },
+    {
+        "$group" : {
+            "_id" : {
+            },
+            "q2a1" : {
+                "$sum": "$q2.answers.a1.value"
+            },
+            "q2a2" : {
+                "$sum": "$q2.answers.a2.value"
+            },
+            "q2a3" : {
+                "$sum": "$q2.answers.a3.value"
+            },
+            "q2a4" : {
+                "$sum": "$q2.answers.a4.value"
+            },
+            "q2a5" : {
+                "$sum": "$q2.answers.a5.value"
+            },
+            "q2a6" : {
+                "$sum": "$q2.answers.a6.value"
+            }
+        }
+    },
+    {
+	"$project": {
+            "_id": 0,
+		    "a1": "$q2a1",
+		    "a2": "$q2a2",
+		    "a3": "$q2a3",
+		    "a4": "$q2a4",
+		    "a5": "$q2a5",
+	        "a6": "$q2a6"
+     	}
+     }])
+
+    # pergjigjen e kthyer dhe te konvertuar ne JSON ne baze te json_util.dumps() e ruajme ne resp
+    resp = Response(
+        response=json_util.dumps(json['result']),
+        mimetype='application/json')
+
+    # ne momentin kur hapim
+    return resp
+
+
+@app.route("/q2age/<string:municipality>/<int:ageto>/<int:agefrom>")
+def q2a20_29(municipality, ageto, agefrom):
+    '''
+    '''
+    # ruajme rezultatin qe na kthehet nga databaza permes ekzekutimit te kerkeses(Query) ne json.
+    json = db.gsc.aggregate([{
+        "$match" : {
+            "surveyee.municipality": municipality,
+            "surveyee.age.to": {"$gte": ageto},
+            "surveyee.age.from": {"$lte": agefrom}
+        }
+    },
+    {
+        "$group" : {
+            "_id" : {
+
+            },
+            "q2a1" : {
+                "$sum": "$q2.answers.a1.value"
+            },
+            "q2a2" : {
+                "$sum": "$q2.answers.a2.value"
+            },
+            "q2a3" : {
+                "$sum": "$q2.answers.a3.value"
+            },
+            "q2a4" : {
+                "$sum": "$q2.answers.a4.value"
+            },
+            "q2a5" : {
+                "$sum": "$q2.answers.a5.value"
+            },
+            "q2a6" : {
+                "$sum": "$q2.answers.a6.value"
+            }
+        }
+    },
+    {
+	"$project": {
+            "_id": 0,
+		    "a1": "$q2a1",
+		    "a2": "$q2a2",
+		    "a3": "$q2a3",
+		    "a4": "$q2a4",
+		    "a5": "$q2a5",
+	        "a6": "$q2a6"
+     	}
+     }])
+
+    # pergjigjen e kthyer dhe te konvertuar ne JSON ne baze te json_util.dumps() e ruajme ne resp
+    resp = Response(
+        response=json_util.dumps(json['result']),
+        mimetype='application/json')
+
+    # ne momentin kur hapim
+    return resp
+
+
+
 @app.route("/q8/<string:municipality>")
 def q8(municipality):
     '''
-        sh.: /q5/Ferizaj
+        sh.: /q8/Ferizaj
     '''
     # ruajme rezultatin qe na kthehet nga databaza permes ekzekutimit te kerkeses(Query) ne json.
     json = db.gsc.aggregate([{  
@@ -194,7 +252,7 @@ def q8(municipality):
         }
     },
      {
-	"$project": { 
+	"$project": {
 	    "_id" : 0,
 	    "8" : { 
 		    "d": "$q8a4",
@@ -242,8 +300,8 @@ def q13(municipality):
             }, 
             "q13a4" : { 
                 "$sum": "$q13.answers.a4.value" 
-            }, 
-            "q13a5" : { 
+            },
+            "q13a5" : {
                 "$sum": "$q13.answers.a5.value" 
             }, 
             "q13a6" : { 
@@ -263,22 +321,21 @@ def q13(municipality):
             }
         }
     },
-    {"$project":{ 
-        "_id": 0,
-        "13":{ 
-            "a": "$q13a1",
-            "b": "$q13a2",
-            "c": "$q13a3",
-            "d": "$q13a4",
-            "e": "$q13a5",
-            "f": "$q13a6",
-            "g": "$q13a7",
-            "h": "$q13a8",
-            "i": "$q13a9",
-            "j": "$q13a10"
+        {
+            "$project" : {
+                "_id" : 0,
+                "a1" : "$q13a1",
+                "a2" : "$q13a2",
+                "a3" : "$q13a3",
+                "a4" : "$q13a4",
+                "a5" : "$q13a5",
+                "a6" : "$q13a6",
+                "a7" : "$q13a7",
+                "a8" : "$q13a8",
+                "a9" : "$q13a9",
+                "a10" : "$q13a10"
+            }
         }
-    }
-    }
 ])
 
     # pergjigjen e kthyer dhe te konvertuar ne JSON ne baze te json_util.dumps() e ruajme ne resp
