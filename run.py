@@ -20,6 +20,66 @@ def index():
     return "<h1>Une jam Nastradini!</h1>"
 
 
+@app.route("/question/<int:qid>/group/<string:group>")
+def grouped_answers(qid, group):
+    '''
+        sh.: /question/1/group/gender
+    '''
+    number_of_answers = 0
+
+    # Set the number of answers expected for each question
+    if qid == 1:
+        number_of_answers = 5
+    elif qid == 2:
+        number_of_answers = 10
+    elif qid == 3:
+        number_of_answers = 2
+    else:
+        # TODO: Throw error
+        number_of_answers = 20
+
+    # Build $group JSON
+    group_json = {}
+    group_json["_id"] = "$surveyee." + group
+
+    for answer_index in range(number_of_answers):
+        question_key = "q" + str(qid) + "a" + str(answer_index)
+        group_json[question_key] = {
+            "$sum": "$q" + str(qid) + ".answers.a" + str(answer_index) + ".value"
+        }
+
+    # Build $project JSON object
+    project_json = {}
+    
+
+    for answer_index in range(number_of_answers):
+        answer_key = "a" + str(answer_index)
+        question_key_ref = "$q" + str(qid) + "a" + str(answer_index)
+
+        project_json[answer_key] = question_key_ref
+
+
+    # Build aggregate JSON
+    aggregate_json = [
+        {
+            "$group" : group_json
+        },
+        {
+            "$project" : project_json
+        }
+    ]
+
+    # Execture aggregate query
+    result_json = db.gsc.aggregate(aggregate_json)
+
+    # Build response object
+    resp = Response(
+        response=json_util.dumps(result_json['result']),
+        mimetype='application/json')
+
+    # Return response
+    return resp
+
 @app.route("/q1/<string:municipality>")
 def q1(municipality):
     '''
@@ -91,6 +151,7 @@ def q1(municipality):
             }
         }
     ])
+
 
     # pergjigjen e kthyer dhe te konvertuar ne JSON ne baze te json_util.dumps() e ruajme ne resp
     resp = Response(
