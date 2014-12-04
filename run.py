@@ -47,7 +47,7 @@ def grouped_answers(qid, group):
         group_json = {}
         group_json["_id"] = "$surveyee." + group
 
-        for answer_index in range(number_of_answers):
+        for answer_index in range(1, number_of_answers + 1):
             question_key = "q" + str(qid) + "a" + str(answer_index)
             group_json[question_key] = {
                 "$sum": "$q" + str(qid) + ".answers.a" + str(answer_index) + ".value"
@@ -57,9 +57,11 @@ def grouped_answers(qid, group):
         project_json = {}
         
 
-        for answer_index in range(number_of_answers):
+        for answer_index in range(1, number_of_answers + 1):
+            question_key = "q" + str(qid)
             answer_key = "a" + str(answer_index)
-            question_key_ref = "$q" + str(qid) + "a" + str(answer_index)
+
+            question_key_ref = "$" + question_key + "a" + str(answer_index)
 
             project_json[answer_key] = question_key_ref
 
