@@ -55,7 +55,6 @@ def grouped_answers(qid, group):
 
         # Build $project JSON object
         project_json = {}
-        
 
         for answer_index in range(1, number_of_answers + 1):
             question_key = "q" + str(qid)
@@ -65,14 +64,20 @@ def grouped_answers(qid, group):
 
             project_json[answer_key] = question_key_ref
 
+        # Build $sort JSON object
+        sort_json = {}
+        sort_json["_id"] = 1
 
         # Build aggregate JSON
         aggregate_json = [
             {
-                "$group" : group_json
+                "$group": group_json
             },
             {
-                "$project" : project_json
+                "$project": project_json
+            },
+            {
+                "$sort": sort_json
             }
         ]
 
