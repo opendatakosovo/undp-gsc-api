@@ -78,7 +78,15 @@ def grouped_answers(qid, group):
 
         # Execture aggregate query
         response_json = db.gsc.aggregate(aggregate_json)
-        result_json = response_json['result']
+        answers_json = response_json['result']
+
+        result_json = {
+            "count": {
+                "answers": number_of_answers,
+                "group": len(answers_json)
+            },
+            "answers": answers_json
+        }
 
     # Build response object
     resp = Response(
