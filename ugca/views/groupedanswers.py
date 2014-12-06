@@ -28,7 +28,7 @@ class GroupedAnswers(View):
 
             # Build $group JSON
             group_json = {}
-            group_json["_id"] = "$surveyee." + group
+            group_json["_id"] = str("$surveyee." + group)
 
             for answer_index in range(1, number_of_answers + 1):
                 question_key = "q" + str(qid) + "a" + str(answer_index)
@@ -64,9 +64,19 @@ class GroupedAnswers(View):
                 }
             ]
 
+            print aggregate_json
+
+            print 'YO'
+
             # Execture aggregate query
             response_json = mongo.db.gsc.aggregate(aggregate_json)
             answers_json = response_json['result']
+
+            print response_json
+
+            print 'YO2'
+
+            print answers_json
 
             result_json = {
                 "count": {
