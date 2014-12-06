@@ -29,3 +29,26 @@ class Utils():
         else:
             return -1
 
+
+    @staticmethod
+    def get_corruption_type_index(corruption_type):
+        if corruption_type == 'embezzlement':
+            return 1
+
+        elif corruption_type == 'extortion':
+            return 2
+
+        elif corruption_type == 'nepotism':
+            return 3
+
+        elif corruption_type == 'bribery':
+            return 4
+
+        elif corruption_type == 'discretionary-powers':
+            return 5
+
+        elif corruption_type == 'trading-influence':
+            return 6
+        
+        else:
+            return -1

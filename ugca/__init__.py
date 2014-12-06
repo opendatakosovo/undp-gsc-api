@@ -107,6 +107,7 @@ def configure_logging(app):
 # Views for json responses
 from views.index import Index
 from views.groupedanswers import GroupedAnswers
+from views.corruptiontype import CorruptionType
 
 def register_url_rules(app):
     ''' Register URLs
@@ -120,3 +121,7 @@ def register_url_rules(app):
     app.add_url_rule(
         '/question/<int:qid>/group/<string:group>',
         view_func=GroupedAnswers.as_view('json_groupedanswers'))
+
+    app.add_url_rule(
+        '/corruption-type/<string:corruption_type>/group/<string:group>',
+        view_func=CorruptionType.as_view('json_corruptiontype'))

@@ -64,19 +64,9 @@ class GroupedAnswers(View):
                 }
             ]
 
-            print aggregate_json
-
-            print 'YO'
-
             # Execture aggregate query
             response_json = mongo.db.gsc.aggregate(aggregate_json)
             answers_json = response_json['result']
-
-            print response_json
-
-            print 'YO2'
-
-            print answers_json
 
             result_json = {
                 "count": {
