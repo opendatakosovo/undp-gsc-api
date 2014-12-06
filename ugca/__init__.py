@@ -106,6 +106,7 @@ def configure_logging(app):
 
 # Views for json responses
 from views.index import Index
+from views.surveyeedistribution import SurveyeeDistribution
 from views.groupedanswers import GroupedAnswers
 from views.corruptiontype import CorruptionType
 
@@ -117,6 +118,10 @@ def register_url_rules(app):
     app.add_url_rule(
         '/',
         view_func=Index.as_view('index'))
+
+    app.add_url_rule(
+        '/surveyee/distribution/<string:group>',
+        view_func=SurveyeeDistribution.as_view('json_surveyeedistribution'))
 
     app.add_url_rule(
         '/question/<int:qid>/group/<string:group>',
