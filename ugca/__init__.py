@@ -128,5 +128,9 @@ def register_url_rules(app):
         view_func=GroupedAnswers.as_view('json_groupedanswers'))
 
     app.add_url_rule(
+        '/question/<int:qid>/group/<string:group>/disaggregate/<string:disaggregate>',
+        view_func=GroupedAnswers.as_view('json_disaggregated_groupedanswers'))
+
+    app.add_url_rule(
         '/corruption-type/<string:corruption_type>/group/<string:group>',
         view_func=CorruptionType.as_view('json_corruptiontype'))

@@ -8,15 +8,16 @@ from ugca import mongo
 
 class GroupedAnswers(View):
 
-    def dispatch_request(self, qid, group):
+    def dispatch_request(self, qid, group, disaggregate=None):
         '''Get the answers to a question grouped by a given interviewee parameter
         :param qid: the question id, i.e. the number of the question.
-        :param group: which interview parameter to group by:
+        :param group: which surveyee parameter to group by:
                         income, gender, municipality , maritalstatus, gender, age, education, region,
                         ethnicity, employment.position, employment.institution, and employtment.level
+        :param disaggregate: which surveyee parameter to disaggregate.
 
-        sh.: /question/1/group/gender
-        sh.: /question/1/group/employment.level
+        sh.: /question/1/group/age/disaggregate/gender
+        sh.: /question/1/group/employment.level/disaggregate/maritalstatus
         '''
 
         result_json = {}
@@ -28,7 +29,14 @@ class GroupedAnswers(View):
 
             # Build $group JSON
             group_json = {}
-            group_json["_id"] = str("$surveyee." + group)
+            
+            if disaggregate != None:
+                group_json["_id"] = {
+                    "group": str("$surveyee." + group),
+                    "disaggregate": str("$surveyee." + disaggregate)
+                }
+            else:
+                group_json["_id"] = str("$surveyee." + group)
 
             for answer_index in range(1, number_of_answers + 1):
                 question_key = "q" + str(qid) + "a" + str(answer_index)
