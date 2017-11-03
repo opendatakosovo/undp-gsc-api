@@ -1,7 +1,8 @@
+from flask import render_template
 from flask.views import View
 
 
 class Index(View):
 
     def dispatch_request(self):
-        return "Welcome to UNDP Gender Corruption Survey API."
+        return render_template('index.html')

@@ -29,7 +29,7 @@ class GroupedAnswers(View):
 
             # Build $group JSON
             group_json = {}
-            
+
             if disaggregate != None:
                 group_json["_id"] = {
                     "group": str("$surveyee." + group),

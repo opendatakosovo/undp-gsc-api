@@ -41,7 +41,7 @@ class SurveyeeDistribution(View):
 
         # Build response object
         resp = Response(
-            response=json_util.dumps(answers_json),
+            response=json_util.dumps(response_json),
             mimetype='application/json')
 
         # Return response

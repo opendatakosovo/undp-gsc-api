@@ -1,0 +1,478 @@
+<html>
+
+  <head>
+    <title>UNDP Gender Corruption Survey API Documentation</title>
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+    <style>
+      /* Custom CSS for code blocks */
+      * {
+        font-family: 'Raleway', 'sans-serif';
+      }
+      table {
+        background-color: #f5f5f5;
+        /*color: #fff;*/
+        border: #e0e0e0 1px solid;
+      }
+      table tbody tr {
+        background-color: #fff;
+      }
+      .well-sm, pre {
+        background-color: #292b36;
+        color: #fff;
+        border-radius: 7px;
+        padding: 2px 23px;
+        border-color: white;
+      }
+      .well-sm h4, table {
+        font-size: 15px;
+      }
+      .subtitle {
+        font-weight: bold;
+        text-align: center;
+      }
+      .well-method h4 {
+        font-weight: bold;
+      }
+      ul.nav-tabs {
+        margin-bottom: 10px;
+      }
+      .api-1, .api-2, .api-3 {
+        margin-bottom: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="col-md-12">
+
+      <div class="header">
+        <div class="page-header">
+          <h1><b>API for UNDP Kosovo Civil Service Gender/Corruption Survey Data</b></h1>
+        </div>
+
+        <p>An API to access data used by the <a target="_blank" href="http://opendatakosovo.org/app/gender-corruption-survey/">UNDP Kosovo Civil Service Gender/Corruption Survey Data Visualizer</a>.</p>
+
+        <h3 class="subtitle">Description</h3>
+        <p>This API helps you to find and get informations based on passed data throughout the request. This data is actually being used in visualization in the UNDP Gender Corruption Visualizer.</p>
+      </div>
+
+      <hr/>
+
+      <h3 class="subtitle">API Usage Guide</h3>
+
+      <!-- First API Endpoint -->
+      <div class="api-1">
+        <h3><b>Surveyee Distribution API</b></h3>
+        <p>Get the answers types of corruption as they are preceived, witnessed, and participated in.</p>
+
+        <div style="padding: 0" class="col-md-1">
+          <h4>Method:</h4>
+          <div class="well well-sm well-method"><h4>GET</h4></div>
+        </div>
+        <div class="col-md-11" style="padding: 0">
+          <h4>URL:</h4>
+          <div class="well well-sm"><h4>/surveyee/distribution/&lt;group&gt;</h4></div>
+        </div>
+
+        <h4>Parameters:</h4>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Values</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>group</td>
+              <td>income,
+              gender,
+              municipality,
+              maritalstatus,
+              age,
+              education,
+              region,
+              ethnicity,
+              employment.position,
+              employment.institution,
+              employment.level</td>
+              <td>Surveyee property to group by selected values.</td>
+          </tbody>
+        </table>
+
+        <hr/>
+
+        <h3 class="subtitle">Sample Request:</h3>
+
+        <ul class="nav nav-tabs">
+          <li class="active"><a>Request URL</a></li>
+        </ul>
+        <div class="well well-sm"><h4>/surveyee/distribution/gender</h4></div>
+
+        <ul class="nav nav-tabs">
+          <li class="active"><a>Success Response</a></li>
+        </ul>
+
+        <pre>
+          <code class="json language-json">
+            [
+              {
+                "count": 398,
+                "_id": "Men"
+              },
+              {
+                "count": 402,
+                "_id": "Women"
+              }
+            ]
+          </code>
+        </pre>
+      </div>
+
+      <hr/>
+
+      <!-- Second API Endpoint -->
+      <div class="api-2">
+        <h3><b>Corruption Type API</b></h3>
+
+        <p>Get the answers types of corruption as they are preceived, witnessed, and participated in.</p>
+
+        <div style="padding: 0" class="col-md-2">
+          <h4>Method:</h4>
+          <div class="well well-sm well-method"><h4>GET</h4></div>
+        </div>
+        <div class="col-md-10" style="padding: 0">
+          <h4>URL:</h4>
+          <div class="well well-sm"><h4>/corruption-type/&lt; group-type-corruption&gt;/group/&lt;group&gt;</h4></div>
+        </div>
+
+        <h4>Parameters:</h4>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Parameters</th>
+              <th>Values</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>group-type-corruption</td>
+              <td>embezzlement, extortion, nepotism</td>
+              <td>The type of corruption</td>
+            </tr>
+            <tr>
+              <td>group</td>
+              <td>income, gender, municipality , maritalstatus, gender, age, education, region,
+                          ethnicity, employment.position, employment.institution, and employtment.level</td>
+              <td>Which interview parameter to group by.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <hr/>
+
+        <h3 class="subtitle">Sample Request:</h3>
+        <ul class="nav nav-tabs">
+          <li class="active"><a>Request URL</a></li>
+        </ul>
+        <div class="well well-sm"><h4>/corruption-type/embezzlement/group/gender</h4></div>
+
+        <ul class="nav nav-tabs">
+          <li class="active"><a>Success Response</a></li>
+        </ul>
+        <pre>
+          <code class="json language-json">
+            [
+              {
+                "perceived": 260,
+                "_id": "Men",
+                "participated": 13,
+                "witnessed": 19
+              },
+              {
+                "perceived": 252,
+                "_id": "Women",
+                "participated": 2,
+                "witnessed": 19
+              }
+            ]
+          </code>
+        </pre>
+      </div>
+
+      <hr/>
+
+      <!-- Third API Endpoint -->
+      <div class="api-3">
+        <h3><b>Grouped Answers API</b></h3>
+        <p>Get the answers to a question grouped by a given interviewee parameter.</p>
+
+        <div style="padding: 0" class="col-md-2">
+          <h4>Method:</h4>
+          <div class="well well-sm well-method"><h4>GET</h4></div>
+        </div>
+        <div class="col-md-10" style="padding: 0">
+          <h4>URL:</h4>
+          <div class="well well-sm"><h4>/question/&lt;q-number&gt;/group/&lt;group&gt;/disaggregate/&lt; disaggregate-group&gt;</h4></div>
+        </div>
+
+
+        <h4>URL Parameters:</h4>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Parameters</th>
+              <th>Values</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>q-number</td>
+              <td>1 until 15</td>
+              <td>The number of question</td>
+            </tr>
+            <tr>
+              <td>group</td>
+              <td style="vertical-align: middle;" rowspan="2">income, gender, municipality , maritalstatus, gender, age, education, region,
+                          ethnicity, employment.position, employment.institution, and employment.level</td>
+              <td>Which interview parameter to group by.</td>
+            </tr>
+            <tr>
+              <td>disaggregate-group</td>
+              <td>Which surveyee parameter to disaggregate.</td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <h3 class="subtitle">Sample Request:</h3>
+        <ul class="nav nav-tabs">
+          <li class="active"><a>Request URL</a></li>
+        </ul>
+        <div class="well well-sm"><h4>/question/1/group/employment.level/disaggregate/maritalstatus</h4></div>
+
+        <ul class="nav nav-tabs">
+          <li class="active"><a>Success Response</a></li>
+        </ul>
+        <pre>
+          <code class="json language-json">
+            {
+              "count": {
+                "group": 10,
+                "answers": 12
+              },
+              "answers": [
+                  {
+                    "a11": 3,
+                    "a10": 2,
+                    "a12": 3,
+                    "a1": 3,
+                    "a3": 3,
+                    "a2": 3,
+                    "a5": 2,
+                    "a4": 3,
+                    "a7": 3,
+                    "a6": 3,
+                    "a9": 3,
+                    "a8": 3,
+                    "_id": {
+                      "disaggregate": "Divorced",
+                      "group": "Government Level"
+                    }
+                  },
+                  {
+                  "a11": 1,
+                    "a10": 0,
+                    "a12": 1,
+                    "a1": 1,
+                    "a3": 1,
+                    "a2": 1,
+                    "a5": 1,
+                    "a4": 1,
+                    "a7": 1,
+                    "a6": 1,
+                    "a9": 0,
+                    "a8": 0,
+                    "_id": {
+                      "disaggregate": "Divorced",
+                      "group": "Municipal Level"
+                    }
+                  },
+                  {
+                    "a11": 237,
+                    "a10": 164,
+                    "a12": 241,
+                    "a1": 164,
+                    "a3": 278,
+                    "a2": 242,
+                    "a5": 269,
+                    "a4": 278,
+                    "a7": 257,
+                    "a6": 288,
+                    "a9": 184,
+                    "a8": 186,
+                    "_id": {
+                      "disaggregate": "Married",
+                      "group": "Government Level"
+                    }
+                  },
+                  {
+                    "a11": 206,
+                    "a10": 115,
+                    "a12": 220,
+                    "a1": 155,
+                    "a3": 263,
+                    "a2": 245,
+                    "a5": 263,
+                    "a4": 259,
+                    "a7": 258,
+                    "a6": 274,
+                    "a9": 142,
+                    "a8": 156,
+                    "_id": {
+                      "disaggregate": "Married",
+                      "group": "Municipal Level"
+                    }
+                  },
+                  {
+                    "a11": 12,
+                    "a10": 7,
+                    "a12": 11,
+                    "a1": 12,
+                    "a3": 15,
+                    "a2": 13,
+                    "a5": 15,
+                    "a4": 13,
+                    "a7": 14,
+                    "a6": 14,
+                    "a9": 10,
+                    "a8": 11,
+                    "_id": {
+                      "disaggregate": "No answer / Refuse",
+                      "group": "Government Level"
+                    }
+                  },
+                  {
+                    "a11": 3,
+                    "a10": 3,
+                    "a12": 3,
+                    "a1": 4,
+                    "a3": 4,
+                    "a2": 4,
+                    "a5": 4,
+                    "a4": 4,
+                    "a7": 4,
+                    "a6": 4,
+                    "a9": 3,
+                    "a8": 3,
+                    "_id": {
+                      "disaggregate": "No answer / Refuse",
+                      "group": "Municipal Level"
+                    }
+                  },
+                  {
+                    "a11": 85,
+                    "a10": 47,
+                    "a12": 89,
+                    "a1": 50,
+                    "a3": 103,
+                    "a2": 94,
+                    "a5": 103,
+                    "a4": 105,
+                    "a7": 93,
+                    "a6": 108,
+                    "a9": 54,
+                    "a8": 57,
+                    "_id": {
+                      "disaggregate": "Single",
+                      "group": "Government Level"
+                    }
+                  },
+                  {
+                    "a11": 30,
+                    "a10": 17,
+                    "a12": 35,
+                    "a1": 26,
+                    "a3": 44,
+                    "a2": 44,
+                    "a5": 44,
+                    "a4": 46,
+                    "a7": 44,
+                    "a6": 46,
+                    "a9": 22,
+                    "a8": 23,
+                    "_id": {
+                      "disaggregate": "Single",
+                      "group": "Municipal Level"
+                    }
+                  },
+                  {
+                    "a11": 3,
+                    "a10": 4,
+                    "a12": 3,
+                    "a1": 2,
+                    "a3": 5,
+                    "a2": 3,
+                    "a5": 3,
+                    "a4": 4,
+                    "a7": 5,
+                    "a6": 5,
+                    "a9": 2,
+                    "a8": 2,
+                    "_id": {
+                      "disaggregate": "Widow",
+                      "group": "Government Level"
+                    }
+                  },
+                  {
+                    "a11": 3,
+                    "a10": 1,
+                    "a12": 2,
+                    "a1": 0,
+                    "a3": 1,
+                    "a2": 3,
+                    "a5": 3,
+                    "a4": 3,
+                    "a7": 2,
+                    "a6": 3,
+                    "a9": 1,
+                    "a8": 2,
+                    "_id": {
+                      "disaggregate": "Widow",
+                      "group": "Municipal Level"
+                    }
+                  }
+                ]
+              }
+          </code>
+        </pre>
+      </div>
+
+
+
+
+
+      <div class="row">
+      <hr>
+        <div class="col-lg-12">
+          <div class="col-md-8">
+            <a target="_blank" href="http://opendatakosovo.org">Developed and Documented by ODK</a>
+          </div>
+          <div class="col-md-4">
+            <p class="muted pull-right">© 2017 <a target="_blank" href="http://opendatakosovo.org">Open Data Kosovo</a>. All rights reserved</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </body>
+</html>
